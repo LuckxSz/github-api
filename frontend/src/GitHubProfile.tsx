@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import type { GitHubUser, GitHubRepo } from "./types";
 export const GitHubProfile = () => {
   const [username, setUsername] = useState("octocat");
@@ -12,12 +12,15 @@ export const GitHubProfile = () => {
       setLoading(true);
 
       try {
-        const userRes = await fetch(`https://api.github.com/users/${username}`);
+        const userRes = await fetch(
+          `http://localhost:3001/api/github/users/${username}`
+        );
+
         const userData: GitHubUser = await userRes.json();
         setUser(userData);
 
         const reposRes = await fetch(
-          `https://api.github.com/users/${username}/repos`
+          `http://localhost:3001/api/github/users/${username}/repos`
         );
         const reposData: GitHubRepo[] = await reposRes.json();
         setRepos(reposData);
