@@ -1,29 +1,20 @@
 import { useState } from "react";
 import type { GitHubUser, GitHubRepo } from "../types";
-import { variants } from "../theme";
+import { useTheme } from "../context/ThemeContext";
 
 export const GitHubProfile = () => {
-  const [username, setUsername] = useState("octocat");
+  const { selectedTheme, toggleDarkMode, darkMode } = useTheme();
+  const [username, setUsername] = useState("LuckxSz");
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState<GitHubUser | null>(null);
   const [repos, setRepos] = useState<GitHubRepo[]>([]);
-
-  const [darkMode, setDarkMode] = useState(false);
-
-  const toggleDarkMode = () => {
-    setDarkMode(!darkMode);
-  };
-
-  const selectedTheme = variants[darkMode ? "dark" : "light"];
 
   const handleKeyDown = async (
     event: React.KeyboardEvent<HTMLInputElement>
   ) => {
     if (event.key === "Enter" && username) {
       setLoading(true);
-      <button onClick={toggleDarkMode}>
-        {darkMode ? "Light Mode" : "DarkMode"}
-      </button>;
+
       try {
         const userRes = await fetch(
           `http://localhost:3001/api/github/users/${username}`
@@ -46,7 +37,7 @@ export const GitHubProfile = () => {
   };
   return (
     <div
-      className={`flex min-h-screen flex-col items-center ${selectedTheme.background} w-full`}
+      className={`center kmt- flex min-h-screen w-full flex-col items-center`}
     >
       <button
         className={`top-4 right-4 rounded-lg px-4 py-2 ${selectedTheme.button}`}
@@ -60,7 +51,7 @@ export const GitHubProfile = () => {
         value={username}
         onChange={(event) => setUsername(event.target.value)}
         onKeyDown={handleKeyDown}
-        className={`w-full max-w-sm rounded-lg border border-[#046E8F] px-4 py-2 shadow-sm placeholder:text-gray-400 focus:ring-2 focus:ring-[#38AECC] focus:outline-none`}
+        className={`w-full max-w-sm ${selectedTheme.input}`}
       />
 
       {loading && (
@@ -81,7 +72,7 @@ export const GitHubProfile = () => {
           <h2 className="mt-4 text-2xl font-bold text-[#38AECC]">
             {user.login}
           </h2>
-          <div className="mt-2 flex gap-4 text-[#046E8F]">
+          <div className={`mt-2 flex gap-4 ${selectedTheme.info} `}>
             <p>Repos: {user.public_repos}</p>
             <p>Followers: {user.followers}</p>
             <p>Following: {user.following}</p>
@@ -96,10 +87,7 @@ export const GitHubProfile = () => {
           </h3>
           <ul className="flex w-auto flex-col gap-3 text-center">
             {repos.map((repo) => (
-              <li
-                key={repo.name}
-                className="rounded-lg border border-[#046E8F] bg-[#183446] p-4 shadow-sm transition-shadow hover:shadow-md"
-              >
+              <li key={repo.name} className={`${selectedTheme.repository}`}>
                 <a
                   href={repo.html_url}
                   target="_blank"
