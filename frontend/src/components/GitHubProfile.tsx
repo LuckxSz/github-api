@@ -37,69 +37,76 @@ export const GitHubProfile = () => {
   };
   return (
     <div
-      className={`center kmt- flex min-h-screen w-full flex-col items-center`}
+      className={`mt-20 flex min-h-screen flex-col items-center px-4 ${selectedTheme.background}`}
     >
+      {/* Botão de tema */}
       <button
-        className={`top-4 right-4 rounded-lg px-4 py-2 ${selectedTheme.button}`}
+        className={`mb-6 rounded-lg px-4 py-2 font-semibold shadow-lg transition ${selectedTheme.button}`}
         onClick={toggleDarkMode}
       >
-        {darkMode ? "Light Mode" : "DarkMode"}
+        {darkMode ? "☀ Light Mode" : "🌙 Dark Mode"}
       </button>
+
       <input
         type="text"
-        placeholder="GitHub username"
+        placeholder="Digite o usuário do GitHub..."
         value={username}
-        onChange={(event) => setUsername(event.target.value)}
+        onChange={(e) => setUsername(e.target.value)}
         onKeyDown={handleKeyDown}
-        className={`w-full max-w-sm ${selectedTheme.input}`}
+        className={`w-2/6 max-w-sm rounded-lg ${selectedTheme.input}`}
       />
 
       {loading && (
-        <p className="animate-pulse text-[#0090C1]">
-          Please wait, fetching data...
+        <p className="mt-4 animate-pulse font-medium text-[#38AECC]">
+          🔍 Buscando dados...
         </p>
       )}
-
+      {/* Card do Usuário */}
       {user && (
         <div
-          className={`rounded-xl$ mt-6 flex w-full max-w-sm flex-col items-center p-6 shadow-md`}
+          className={`mt-6 w-full max-w-sm rounded-xl p-6 shadow-md ${selectedTheme.repository}`}
         >
           <img
             src={user.avatar_url}
             alt={user.login}
-            className="h-32 w-32 rounded-full border-2 border-[#0090C1]"
+            className="mx-auto h-32 w-32 rounded-full border-2 border-[#38AECC]"
           />
-          <h2 className="mt-4 text-2xl font-bold text-[#38AECC]">
+          <h2 className="mt-4 justify-around text-center text-lg font-bold text-[#38AECC]">
             {user.login}
           </h2>
-          <div className={`mt-2 flex gap-4 ${selectedTheme.info} `}>
-            <p>Repos: {user.public_repos}</p>
-            <p>Followers: {user.followers}</p>
-            <p>Following: {user.following}</p>
+          <div className={`mt-4 flex justify-around ${selectedTheme.info}`}>
+            <p>📂 {user.public_repos}</p>
+            <p>👥 {user.followers}</p>
+            <p>➡ {user.following}</p>
           </div>
         </div>
       )}
 
       {repos.length > 0 && (
-        <div className="mt-6 w-full max-w-md">
-          <h3 className="mb-4 text-center text-xl font-semibold text-[#38AECC]">
-            Repositories
+        <div className="mt-12 w-full max-w-5xl">
+          <h3 className="mb-4 p-8 text-center text-xl font-semibold text-[#38AECC]">
+            📚 Repositórios
           </h3>
-          <ul className="flex w-auto flex-col gap-3 text-center">
+          <ul className="flex flex-col gap-4">
             {repos.map((repo) => (
-              <li key={repo.name} className={`${selectedTheme.repository}`}>
+              <li
+                key={repo.name}
+                className={`rounded-x1 p-6 shadow-lg hover:scale-[1.02] ${selectedTheme.repository}`}
+              >
                 <a
                   href={repo.html_url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-lg font-bold text-[#0090C1] hover:underline"
+                  className="block text-lg font-bold text-[#0090C1] hover:underline"
                 >
                   {repo.name}
                 </a>
                 {repo.description && (
-                  <p className="mt-1 text-[#E0E0E0]">{repo.description}</p>
+                  <p className="mt-2 line-clamp-2 text-sm text-[#E0E0E0]">
+                    {repo.description}
+                  </p>
                 )}
-                <p className="mt-2 text-[#38AECC]">
+                <p className="mt-3 font-medium text-[#38AECC]">
                   ⭐ {repo.stargazers_count}
                 </p>
               </li>
