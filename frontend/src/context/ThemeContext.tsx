@@ -1,16 +1,10 @@
 import { createContext, useContext, useState, type ReactNode } from "react";
-import { variants } from "../theme";
+import { variants, type Variant } from "../theme";
 
 type ThemeContextType = {
   darkMode: boolean;
   toggleDarkMode: () => void;
-
-  selectedTheme: {
-    background: string;
-    input: string;
-    button: string;
-    appbackground: string;
-  };
+  selectedTheme: Variant;
 };
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);

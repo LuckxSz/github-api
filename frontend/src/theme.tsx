@@ -1,12 +1,4 @@
-interface Variant {
-  background: string;
-  input: string;
-  button: string;
-  repository: string;
-  info: string;
-}
-
-export const variants: Record<"dark" | "light", Variant> = {
+export const variants = {
   dark: {
     background: "bg-[#0b2652] ",
     input:
@@ -27,4 +19,6 @@ export const variants: Record<"dark" | "light", Variant> = {
       "rounded-lg border border-[#046E8F] bg-[#183446] text-[#38AECC] p-4 shadow-sm transition-shadow hover:shadow-md",
     info: " text-[#046E8F]",
   },
-};
+} as const;
+
+export type Variant = typeof variants.dark;
