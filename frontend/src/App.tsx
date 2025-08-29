@@ -2,7 +2,7 @@ import { GitHubProfile } from "./components/GitHubProfile";
 import { useTheme } from "./context/ThemeContext";
 
 export const App = () => {
-  const { selectedTheme, toggleDarkMode } = useTheme();
+  const { selectedTheme } = useTheme();
 
   console.log("Classes aplicadas:", selectedTheme.background);
 
