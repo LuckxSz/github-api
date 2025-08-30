@@ -4,6 +4,7 @@ const API_BASE = "http://localhost:3001/api/github";
 
 export async function fetchUser(username: string): Promise<GitHubUser> {
   const res = await fetch(`${API_BASE}/users/${username}`);
+
   if (!res.ok) throw new Error("Erro ao buscar usuário");
   return res.json();
 }
