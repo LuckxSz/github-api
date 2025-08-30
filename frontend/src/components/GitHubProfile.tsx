@@ -1,39 +1,19 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
-import type { GitHubUser, GitHubRepo } from "../types";
+
 import { useTheme } from "../context/ThemeContext";
 import noImage from "../assets/noImage.png";
 import { FiSearch } from "react-icons/fi";
+import { useGitHub } from "../hooks/useGitHub";
 
 export const GitHubProfile = () => {
   const { selectedTheme, toggleDarkMode, darkMode } = useTheme();
   const [username, setUsername] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [user, setUser] = useState<GitHubUser | null>(null);
-  const [repos, setRepos] = useState<GitHubRepo[]>([]);
+  const { user, repos, loading, loadUserData } = useGitHub();
 
-  const handleKeyDown = async (
-    event: React.KeyboardEvent<HTMLInputElement>
-  ) => {
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter" && username) {
-      setLoading(true);
-      try {
-        const userRes = await fetch(
-          `http://localhost:3001/api/github/users/${username}`
-        );
-        const userData: GitHubUser = await userRes.json();
-        setUser(userData);
-
-        const reposRes = await fetch(
-          `http://localhost:3001/api/github/users/${username}/repos`
-        );
-        const reposData: GitHubRepo[] = await reposRes.json();
-        setRepos(reposData);
-      } catch (err) {
-        console.error(err);
-      } finally {
-        setLoading(false);
-      }
+      loadUserData(username);
     }
   };
 
