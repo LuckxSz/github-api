@@ -18,9 +18,14 @@ export const GitHubProfile = () => {
     }
   };
 
+  const handleOpenCard = () => {
+    setOpenCard((prev) => !prev);
+  };
+
   return (
     <div className="flex min-h-screen w-full">
       <Sidebar />
+
       <div className="flex flex-1 flex-col items-center">
         <motion.button
           className={`mt-12 mb-12 p-4 ${selectedTheme.button}`}
@@ -101,7 +106,7 @@ export const GitHubProfile = () => {
               >
                 <p>Repos: {user.public_repos}</p>
                 <p>Followers: {user.followers}</p>
-                <p>Following: {user.following}</p>
+                <p>Following : {user.following}</p>
               </motion.div>
             </motion.div>
           )}
@@ -125,7 +130,8 @@ export const GitHubProfile = () => {
                   {repos.map((repo, i) => (
                     <motion.div
                       key={repo.name}
-                      className={`${selectedTheme.repository} rounded-xl border border-gray-700 p-4 shadow-md`}
+                      className={`${selectedTheme.repository} cursor-pointer rounded-xl border border-gray-700 p-4 shadow-md`}
+                      onClick={handleOpenCard}
                       whileHover={{
                         scale: 1.02,
                         boxShadow: "0px 10px 20px rgba(0,0,0,0.25)",
