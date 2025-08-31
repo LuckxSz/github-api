@@ -43,7 +43,7 @@ export const Sidebar = () => {
               key={label}
               href="#"
               className="flex items-center gap-2 rounded-lg p-2 transition hover:bg-gray-800"
-              onClick={() => toast(`${label} under construiction!`)}
+              onClick={() => toast(`${label} under construction!`)}
             >
               {icon} <span className={open ? "block" : "hidden"}>{label}</span>
             </a>
