@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
-
+import { ToastContainer, toast } from "react-toastify";
 import { useTheme } from "../context/ThemeContext";
 import noImage from "../assets/noImage.png";
 import { FiSearch } from "react-icons/fi";
@@ -14,6 +14,7 @@ export const GitHubProfile = () => {
   const { user, repos, loading, loadUserData } = useGitHub();
   const [openCard, setOpenCard] = useState<boolean>(false);
   const [selectedRepo, setSelectedRepo] = useState<any | null>(null);
+  const notify = () => toast("Wow so easy !");
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter" && username) {
       loadUserData(username);

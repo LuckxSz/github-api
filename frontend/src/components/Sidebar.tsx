@@ -1,65 +1,58 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { FiMenu, FiHome, FiUser, FiSettings, FiLogOut } from "react-icons/fi";
 import { ImCross } from "react-icons/im";
 
 export const Sidebar = () => {
   const [open, setOpen] = useState(false);
 
+  const links = [
+    { icon: <FiHome />, label: "Home" },
+    { icon: <FiUser />, label: "Perfil" },
+    { icon: <FiSettings />, label: "Configurações" },
+    { icon: <FiLogOut />, label: "Login / Logout" },
+  ];
+
   return (
     <div className="">
+      {/* Botão toggle */}
       <button
         onClick={() => setOpen(!open)}
-        className="m-4 cursor-pointer rounded-4xl bg-gray-800 p-2 text-white transition hover:bg-gray-700"
+        className="m-4 cursor-pointer rounded-2xl bg-gray-800 p-2 text-white transition hover:bg-gray-700"
       >
-        {open ? (
-          <ImCross className="transition" size={24} />
-        ) : (
-          <FiMenu className="transition" size={24} />
-        )}
+        {open ? <ImCross size={24} /> : <FiMenu size={24} />}
       </button>
 
+      {/* Sidebar animada */}
       <motion.aside
         initial={{ width: 0 }}
         animate={{ width: open ? 220 : 0 }}
         transition={{ duration: 0.3 }}
-        className="cursor-pointer overflow-hidden rounded-4xl bg-gray-900 text-gray-100 shadow-lg"
+        className="overflow-hidden rounded-2xl bg-gray-900 text-gray-100 shadow-lg"
       >
-        <nav className="flex flex-col gap-5 p-3">
-          <a
-            href="#"
-            className="flex items-center gap-2 rounded-lg p-2 transition hover:bg-gray-800"
-          >
-            <FiHome />{" "}
-            <span className={`${open ? "block" : "hidden"}`}>Home</span>
-          </a>
-          <a
-            href="#"
-            className="flex items-center gap-2 rounded-lg p-2 transition hover:bg-gray-800"
-          >
-            <FiUser />{" "}
-            <span className={`${open ? "block" : "hidden"}`}>Perfil</span>
-          </a>
-          <a
-            href="#"
-            className="flex items-center gap-2 rounded-lg p-2 transition hover:bg-gray-800"
-          >
-            <FiSettings />{" "}
-            <span className={`${open ? "block" : "hidden"}`}>
-              Configurações
-            </span>
-          </a>
-          <a
-            href="#"
-            className="flex items-center gap-2 rounded-lg p-2 transition hover:bg-gray-800"
-          >
-            <FiLogOut />{" "}
-            <span className={`${open ? "block" : "hidden"}`}>
-              Login / Logout
-            </span>
-          </a>
-        </nav>
+        <motion.nav
+          className="flex flex-col gap-5 p-3"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: open ? 1 : 0 }}
+          transition={{ duration: 0.3 }}
+        >
+          {links.map(({ icon, label }) => (
+            <a
+              key={label}
+              href="#"
+              className="flex items-center gap-2 rounded-lg p-2 transition hover:bg-gray-800"
+              onClick={() => toast(`${label} under construiction!`)}
+            >
+              {icon} <span className={open ? "block" : "hidden"}>{label}</span>
+            </a>
+          ))}
+        </motion.nav>
       </motion.aside>
+
+      {/* Toast container */}
+      <ToastContainer position="top-right" autoClose={3000} />
     </div>
   );
 };
