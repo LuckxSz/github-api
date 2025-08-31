@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { useTheme } from "../context/ThemeContext";
+import { useEffect } from "react";
 
 interface CardProps {
   repo: any;
@@ -7,7 +8,18 @@ interface CardProps {
 }
 
 export const Card = ({ repo, onClose }: CardProps) => {
-  const { selectedTheme, toggleDarkMode, darkMode } = useTheme();
+  const { selectedTheme } = useTheme();
+
+  useEffect(() => {
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        onClose();
+      }
+    };
+    window.addEventListener("keydown", handleEsc);
+    return () => window.removeEventListener("keydown", handleEsc);
+  }, [onClose]);
+
   return (
     <motion.div
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
@@ -49,4 +61,3 @@ export const Card = ({ repo, onClose }: CardProps) => {
     </motion.div>
   );
 };
-// rounded-lg bg-[#0090C1]  font-semibold text-white hover:bg-[#0078a8]

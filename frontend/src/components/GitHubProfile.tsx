@@ -1,5 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
+
 import { useTheme } from "../context/ThemeContext";
 import noImage from "../assets/noImage.png";
 import { FiSearch } from "react-icons/fi";
@@ -11,7 +12,7 @@ export const GitHubProfile = () => {
   const { selectedTheme, toggleDarkMode, darkMode } = useTheme();
   const [username, setUsername] = useState("");
   const { user, repos, loading, loadUserData } = useGitHub();
-  const [openCard, setOpenCard] = useState(false);
+  const [openCard, setOpenCard] = useState<boolean>(false);
   const [selectedRepo, setSelectedRepo] = useState<any | null>(null);
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter" && username) {
