@@ -8,6 +8,7 @@ export const variants = {
     repository:
       "rounded-lg border border-[#046E8F]  bg-[#081f45] text-[#38AECC] p-4 shadow-sm transition-shadow hover:shadow-md",
     info: " text-white",
+    card: " bg-[#081f45] text-white p-6 shadow-lg",
   },
   light: {
     background: "bg-white",
@@ -18,6 +19,7 @@ export const variants = {
     repository:
       "rounded-lg border border-[#046E8F] bg-[#183446] text-[#38AECC] p-4 shadow-sm transition-shadow hover:shadow-md",
     info: " text-[#046E8F]",
+    card: " bg-white text-black p-6 shadow-lg",
   },
 } as const;
 

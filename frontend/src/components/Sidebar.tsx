@@ -23,9 +23,9 @@ export const Sidebar = () => {
         initial={{ width: 0 }}
         animate={{ width: open ? 220 : 0 }}
         transition={{ duration: 0.3 }}
-        className="h-screen cursor-pointer overflow-hidden rounded-4xl bg-gray-900 text-gray-100 shadow-lg"
+        className="cursor-pointer overflow-hidden rounded-4xl bg-gray-900 text-gray-100 shadow-lg"
       >
-        <nav className="flex flex-col gap-4 p-4">
+        <nav className="flex flex-col gap-5 p-3">
           <a
             href="#"
             className="flex items-center gap-2 rounded-lg p-2 transition hover:bg-gray-800"
@@ -54,12 +54,12 @@ export const Sidebar = () => {
             className="flex items-center gap-2 rounded-lg p-2 transition hover:bg-gray-800"
           >
             <FiLogOut />{" "}
-            <span className={`${open ? "block" : "hidden"}`}>Sair</span>
+            <span className={`${open ? "block" : "hidden"}`}>
+              Login / Logout
+            </span>
           </a>
         </nav>
       </motion.aside>
     </div>
   );
 };
-
-export default Sidebar;

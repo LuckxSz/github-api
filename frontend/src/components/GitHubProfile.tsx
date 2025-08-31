@@ -1,27 +1,33 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
-
 import { useTheme } from "../context/ThemeContext";
 import noImage from "../assets/noImage.png";
 import { FiSearch } from "react-icons/fi";
 import { useGitHub } from "../hooks/useGitHub";
 import { Sidebar } from "./Sidebar";
+import { Card } from "./Card";
 
 export const GitHubProfile = () => {
   const { selectedTheme, toggleDarkMode, darkMode } = useTheme();
   const [username, setUsername] = useState("");
   const { user, repos, loading, loadUserData } = useGitHub();
-
+  const [openCard, setOpenCard] = useState(false);
+  const [selectedRepo, setSelectedRepo] = useState<any | null>(null);
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter" && username) {
       loadUserData(username);
     }
   };
 
-  const handleOpenCard = () => {
-    setOpenCard((prev) => !prev);
+  const handleOpenCard = (repo: any) => {
+    setSelectedRepo(repo);
+    setOpenCard(true);
   };
 
+  const handleCloseCard = () => {
+    setOpenCard(false);
+    setSelectedRepo(null);
+  };
   return (
     <div className="flex min-h-screen w-full">
       <Sidebar />
@@ -131,7 +137,7 @@ export const GitHubProfile = () => {
                     <motion.div
                       key={repo.name}
                       className={`${selectedTheme.repository} cursor-pointer rounded-xl border border-gray-700 p-4 shadow-md`}
-                      onClick={handleOpenCard}
+                      onClick={() => handleOpenCard(repo)}
                       whileHover={{
                         scale: 1.02,
                         boxShadow: "0px 10px 20px rgba(0,0,0,0.25)",
@@ -170,6 +176,9 @@ export const GitHubProfile = () => {
                 </div>
               </ul>
             </motion.div>
+          )}
+          {openCard && selectedRepo && (
+            <Card repo={selectedRepo} onClose={handleCloseCard} />
           )}
         </AnimatePresence>
       </div>
